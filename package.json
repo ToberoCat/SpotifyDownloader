@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "cli-progress": "^3.11.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "js-yaml": "^4.1.0",
+    "spotify-web-api-node": "^5.0.2",
+    "youtube-search-without-api-key": "^1.0.7",
+    "ytdl-core": "^4.11.2"
+  }
+}

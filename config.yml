@@ -1,0 +1,7 @@
+# Get your client id and secret
+# https://developer.spotify.com/documentation/general/guides/authorization/app-settings/
+#
+# This client id and secret can't be used. You have to use your own client id and secret
+
+client-id: "fcecfc72172e4cd267473117a17cbd4d" # Your client ID
+client-secret: "a6338157c9bb5ac9c71924cb2940e1a7" # Your client secret
