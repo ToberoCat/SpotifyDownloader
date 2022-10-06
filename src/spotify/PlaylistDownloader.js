@@ -21,7 +21,7 @@ class Downloader {
         this.bar.start(this.queue.length, 0);
 
         for (let i = 0; i < this.downloadWorkers; i++)
-            this.nextPlaylistWorker();
+            this.nextPlaylistWorker(this.queue.length);
     }
 
     async downloadAlbum(id) {
@@ -31,7 +31,7 @@ class Downloader {
         this.bar.start(this.queue.length, 0);
 
         for (let i = 0; i < this.downloadWorkers; i++)
-            this.nextAlbumWorker();
+            this.nextAlbumWorker(this.queue.length);
     }
 
     async downloadTrack(id) {
@@ -44,7 +44,7 @@ class Downloader {
 
         new SongDownloader(`${this.musicPath}/${name.replace(/[<>:"\/\\|?*]+/g, '')}.mp3`, query,
             () => {
-                this.bar.increment();
+                this.bar.setTotal(1);
                 this.bar.stop();
             }, (err) => {
                 console.log(err);
@@ -52,8 +52,9 @@ class Downloader {
             });
     }
 
-    nextPlaylistWorker() {
+    nextPlaylistWorker(total) {
         if (this.queue.length === 0) {
+            this.bar.setTotal(total);
             this.bar.stop();
             return;
         }
@@ -65,16 +66,17 @@ class Downloader {
 
         new SongDownloader(`${this.musicPath}/${name.replace(/[<>:"\/\\|?*]+/g, '')}.mp3`, query, () => {
             this.bar.increment();
-            this.nextPlaylistWorker();
+            this.nextPlaylistWorker(total);
         }, (err) => {
             console.log(err);
             this.bar.increment();
-            this.nextPlaylistWorker();
+            this.nextPlaylistWorker(total);
         });
     }
 
-    nextAlbumWorker() {
+    nextAlbumWorker(total) {
         if (this.queue.length === 0) {
+            this.bar.setTotal(total);
             this.bar.stop();
             return;
         }
@@ -85,11 +87,11 @@ class Downloader {
 
         new SongDownloader(`${this.musicPath}/${name.replace(/[<>:"\/\\|?*]+/g, '')}.mp3`, query, () => {
             this.bar.increment();
-            this.nextAlbumWorker();
+            this.nextAlbumWorker(total);
         }, (err) => {
             console.log(err);
             this.bar.increment();
-            this.nextAlbumWorker();
+            this.nextAlbumWorker(total);
         });
     }
 
