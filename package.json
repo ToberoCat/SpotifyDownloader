@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "cli-progress": "^3.11.1",
     "fluent-ffmpeg": "^2.1.2",
     "js-yaml": "^4.1.0",
+    "puppeteer": "^19.2.0",
+    "request": "^2.88.2",
     "spotify-web-api-node": "^5.0.2",
     "youtube-search-without-api-key": "^1.0.7",
     "ytdl-core": "^4.11.2"

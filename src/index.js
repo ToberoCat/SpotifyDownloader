@@ -1,7 +1,7 @@
 const parseArgs = require("./ArgumentParsing");
 const Downloader = require("./spotify/PlaylistDownloader");
 const yaml = require('js-yaml');
-const fs   = require('fs');
+const fs = require('fs');
 
 const map = new Map([
     ['url', null],
@@ -22,7 +22,7 @@ const config = yaml.load(fs.readFileSync('../config.yml', 'utf8'));
 const downloader = new Downloader( // ToDo: Check if the right types where specified before casting
     config["client-id"],
     config["client-secret"],
-    map.get("output"),
+    "../" + map.get("output"),
     parseInt(map.get("workers")),
     parseInt(map.get("limit")),
     parseInt(map.get("skip")));
@@ -34,6 +34,7 @@ const downloader = new Downloader( // ToDo: Check if the right types where speci
 const url = map.get("url");
 const id = url.split("/").at(-1).split("?")[0];
 let promise = null;
+
 
 if (url.includes("playlist")) promise = downloader.downloadPlaylist(id);
 else if (url.includes("track")) promise = downloader.downloadTrack(id);

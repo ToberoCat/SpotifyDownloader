@@ -21,17 +21,15 @@ class SongDowloader {
             if (videos.length === 0) reject("No videos found");
             resolve(videos[0].url);
         });
-
     }
 
     download(url) {
-        return new Promise(async (resolve, reject) => {
-            const stream = ytdl(url, {quality: "highestaudio"});
-            ffmpeg(stream)
+        return new Promise(async (resolve, reject) =>
+            ffmpeg(ytdl(url, {quality: "highestaudio"}))
                 .audioBitrate(128)
                 .save(this.toFile)
-                .on("end", resolve);
-        });
+                .on("end", resolve)
+                .on("error", reject));
     }
 }
 

@@ -1,6 +1,8 @@
 const Spotify = require("./Spotify");
-const SongDownloader = require("./SongDowloader");
+const SongDownloader = require("../SongDowloader");
 const cliProgress = require('cli-progress');
+const path = require("path");
+const fs = require("fs");
 
 class Downloader {
     constructor(clientId, clientSecret, musicPath, downloadWorkers, limit, offset) {
@@ -12,6 +14,9 @@ class Downloader {
         this.bar = null;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+
+        fs.mkdirSync(this.musicPath, {recursive: true});
+        console.log("Songs will be saved in this folder: " + path.resolve(this.musicPath))
     }
 
     async downloadPlaylist(id) {
@@ -47,7 +52,7 @@ class Downloader {
                 this.bar.setTotal(1);
                 this.bar.stop();
             }, (err) => {
-                console.log(err);
+                console.error(err);
                 this.bar.stop();
             });
     }
@@ -60,7 +65,6 @@ class Downloader {
         }
         const track = this.queue.pop();
 
-        console.log(track);
         const name = track.track.name;
         const query = `${name} ${track.track.artists[0].name}`;
 
@@ -68,8 +72,8 @@ class Downloader {
             this.bar.increment();
             this.nextPlaylistWorker(total);
         }, (err) => {
-            console.log(err);
-            this.bar.increment();
+            console.error(err);
+            this.queue.push(track);
             this.nextPlaylistWorker(total);
         });
     }
@@ -89,8 +93,8 @@ class Downloader {
             this.bar.increment();
             this.nextAlbumWorker(total);
         }, (err) => {
-            console.log(err);
-            this.bar.increment();
+            console.error(err);
+            this.queue.push(track);
             this.nextAlbumWorker(total);
         });
     }
