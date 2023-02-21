@@ -17,7 +17,7 @@ You can get it on the official [spotify developer website](https://developer.spo
 
 ## How to use
 After you've set up the config file correctly, you are able to use the tool.
-You can execute the `Download Playlist.bat`. It will ask you to enter a 
+You can execute the `Download Playlist.bat`. It will download all dependencies automatically. After that's done, it will ask you to enter a 
 valid spotify url and an output folder where the tracks will be stored.
 
 After you have entered everything required, it will download the tracks and display the progress.
